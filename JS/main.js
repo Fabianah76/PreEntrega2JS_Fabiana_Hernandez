@@ -24,6 +24,9 @@ const cantVisitas4 = "4- 4 veces";
 const cantVisitas5 = "5- 5 veces o más"; 
 
 const encuestas = [];
+const cargaBurocraticaSoloVirtual = [];
+const cargaBurocraticaVirtualYPresencial = [];
+const cargaBurocraticaSoloPresencial = [];
 
 function formEncuesta() {
    
@@ -189,20 +192,44 @@ function formEncuesta() {
         pregunta8: tarifaTramite,
         pregunta9: visitasIE,
         pregunta10: costoTrans,
-        resultadoFinal: cargaBurocratica
+        resultadoFinal: cargaBurocratica,
     };
 
     return respuestasEncuesta;
+
 }
 formEncuesta();
 
 // Bucle para repetir la encuesta 3 veces
 for (let i = 0; i < 3; i++) {
-    let respuestas = formEncuesta();
-    encuestas.push(respuestas); // Guardar las respuestas en el arreglo
+let respuestas = formEncuesta();
+encuestas.push(respuestas);
+
+// Clasificar la carga burocrática según la modalidad del trámite
+switch (respuestas.modtramite) {
+    case 1:
+        cargaBurocraticaSoloVirtual.push(respuestas.cargaBurocratica);
+        break;
+    case 2:
+        cargaBurocraticaVirtualYPresencial.push(respuestas.cargaBurocratica);
+        break;
+    case 3:
+        cargaBurocraticaSoloPresencial.push(respuestas.cargaBurocratica);
+        break;
+}
 }
 
 // Mostrar todas las encuestas completadas
 console.log("Encuestas completadas:", encuestas);
+console.log("Cargas burocráticas de solo virtual:", cargaBurocraticaSoloVirtual);
+console.log("Cargas burocráticas de virtual y presencial:", cargaBurocraticaVirtualYPresencial);
+console.log("Cargas burocráticas de solo presencial:", cargaBurocraticaSoloPresencial);
 
-
+function calcularPromedio(array) {
+    if (array.length === 0) return 0; // Evitar división por cero
+    const suma = array.reduce((accum, curr) => accum + curr, 0);
+    return suma / array.length;
+}
+console.log("Promedio de solo virtual:", calcularPromedio(cargaBurocraticaSoloVirtual));
+console.log("Promedio de virtual y presencial:", calcularPromedio(cargaBurocraticaVirtualYPresencial));
+console.log("Promedio de solo presencial:", calcularPromedio(cargaBurocraticaSoloPresencial));
