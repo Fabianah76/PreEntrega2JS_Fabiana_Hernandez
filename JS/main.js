@@ -196,7 +196,6 @@ function formEncuesta() {
     };
 
     return respuestasEncuesta;
-
 }
 formEncuesta();
 
@@ -206,15 +205,15 @@ let respuestas = formEncuesta();
 encuestas.push(respuestas);
 
 // Clasificar la carga burocrática según la modalidad del trámite
-switch (respuestas.modtramite) {
+switch (respuestas.pregunta1) {
     case 1:
-        cargaBurocraticaSoloVirtual.push(respuestas.cargaBurocratica);
+        cargaBurocraticaSoloVirtual.push(respuestas.resultadoFinal);
         break;
     case 2:
-        cargaBurocraticaVirtualYPresencial.push(respuestas.cargaBurocratica);
+        cargaBurocraticaVirtualYPresencial.push(respuestas.resultadoFinal);
         break;
     case 3:
-        cargaBurocraticaSoloPresencial.push(respuestas.cargaBurocratica);
+        cargaBurocraticaSoloPresencial.push(respuestas.resultadoFinal);
         break;
 }
 }
