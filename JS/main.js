@@ -23,7 +23,7 @@ const cantVisitas3 = "3- 3 veces";
 const cantVisitas4 = "4- 4 veces"; 
 const cantVisitas5 = "5- 5 veces o más"; 
 
-
+const encuestas = [];
 
 function formEncuesta() {
    
@@ -174,25 +174,35 @@ function formEncuesta() {
     }  
 
     let resultadoFinal = tiempoLectura + tiempoLlenado + tiempoTraslado + tiempoInicio + VST + tarifaTramite + visitasIE + costoTrans;
+    let cargaBurocratica = resultadoFinal;
+    alert("El valor de la carga burocrática de tu trámite es: " + cargaBurocratica);
+    console.log("Carga burocrática total:", cargaBurocratica);
     
-    alert("El valor de la carga burocrática de tu trámite es: " + resultadoFinal);
-    console.log("Carga burocrática total:", resultadoFinal);
-   
-}
+    const respuestasEncuesta = {
+        pregunta1: modtramite,
+        pregunta2: tiempoLectura,
+        pregunta3: tiempoLlenado,
+        pregunta4: tiempoTraslado,
+        pregunta5: tiempoInicio,
+        pregunta6: tiempoResol,
+        pregunta7: VST,
+        pregunta8: tarifaTramite,
+        pregunta9: visitasIE,
+        pregunta10: costoTrans,
+        resultadoFinal: cargaBurocratica
+    };
 
+    return respuestasEncuesta;
+}
 formEncuesta();
 
-for (let i = 0; i <= 3; i++) {  // Bucle que se ejecuta 3 veces (de 0 a 2)
-    let encuestaExitosa = formEncuesta();  // Ejecuta la encuesta
-
-    if (!encuestaExitosa) {
-        alert("Cupo de encuestas completo");    
-    }
-    
+// Bucle para repetir la encuesta 3 veces
+for (let i = 0; i < 3; i++) {
+    let respuestas = formEncuesta();
+    encuestas.push(respuestas); // Guardar las respuestas en el arreglo
 }
 
+// Mostrar todas las encuestas completadas
+console.log("Encuestas completadas:", encuestas);
 
 
-// tengo que construir un array con todas las respuestas después de ver si funciona el último for 
-// despues tengo que recorrer el array con filter para identificar las 3 momdalidades en la pregunta 1 para generar 3 arrays 
-// uno por modalidad
