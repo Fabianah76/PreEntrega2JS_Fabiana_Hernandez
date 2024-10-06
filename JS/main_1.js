@@ -25,7 +25,7 @@ const cantVisitas5 = "5- 5 veces o más";
 
 
 
-function formEncuesta() {
+function fomEncuesta() {
    
     while (true) {
         let pregunta1 = prompt("Pregunta 1.\n¿Cuál fue la modalidad del trámite que realizaste?\n" 
@@ -145,23 +145,23 @@ function formEncuesta() {
 
         while (true) {
         let pregunta9= prompt("Pregunta 9. \n" +"¿Cuántas veces tuviste que ir a la institución estatal para completar este trámite? \n" + cantVisitas0 + "\n" + cantVisitas1 + "\n" + cantVisitas2 + "\n" + cantVisitas3 + "\n" + cantVisitas4 + "\n" + cantVisitas5); 
-        visitasIE = parseInt(pregunta9);
+                
+        // Convertir la entrada a número
+        visitasIE = parseInt(pregunta9) * 2;
         console.log("Cantidad de visitas a la IE:", pregunta9);
-        
+
         // Si la entrada es un número entre 0 y 5, salir del bucle
-        if (!isNaN(visitasIE) && visitasIE >= 0 && visitasIE <=5) {
+        if (!isNaN(visitasIE) && visitasIE >= 0 && visitasIE <= 5) {
             break;
-        } 
-        else {
+        } else {
             // Si la opción no es válida, mostrar un mensaje de error y repetir la pregunta
             alert("Por favor, ingresa el número de la opción elegida: 0, 1, 2, 3, 4 o 5.");
         }
-        
     } 
-     
+
     while (true) {
         let pregunta10 = prompt("Pregunta 10. \n" + "¿Cuánto dinero gastaste en transporte para ir a la IE a realizar este trámite? \n"  + "Digita el valor del boleto de ida, sin puntos ni comas." + "\n" + "Si no tuviste costo de transporte, digita 0 (cero).");
-        costoTrans = parseInt(pregunta10) * (visitasIE *2);
+        costoTrans = parseInt(pregunta10) * visitasIE;
         console.log("Costo de trasnsporte:", costoTrans);
 
         // Si la entrada es un número mayor o igual a 0, salir del bucle
@@ -180,19 +180,10 @@ function formEncuesta() {
    
 }
 
-formEncuesta();
+fomEncuesta();
 
-for (let i = 0; i <= 3; i++) {  // Bucle que se ejecuta 3 veces (de 0 a 2)
-    let encuestaExitosa = formEncuesta();  // Ejecuta la encuesta
-
-    if (!encuestaExitosa) {
-        alert("Cupo de encuestas completo");    
-    }
-    
+for (let i = 0; i < 3; i++) {
+    let encuestaExitosa = formEncuesta();
+    if (!encuestaExitosa) alert ("Cupo de encuestas completo")
+    break; // Si algo sale mal, salir del ciclo
 }
-
-
-
-// tengo que construir un array con todas las respuestas después de ver si funciona el último for 
-// despues tengo que recorrer el array con filter para identificar las 3 momdalidades en la pregunta 1 para generar 3 arrays 
-// uno por modalidad

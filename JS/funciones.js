@@ -1,33 +1,6 @@
-const modvirtual = "1- Sólo virtual ";
-const modvirtualPresencial = "2- Virtual y presencial";
-const modpresencial = "3- Sólo presencial";
-
-const valort0 = "0- Menos de 15 minutos";
-const valort1 = "1- 15 minutos"; 
-const valort2 = "2- 30 minutos"; 
-const valort3 = "3- 60 minutos"; 
-const valort4 = "4- 120 minutos"; 
-const valort5 = "5- 240 minutos"; 
-
-const valortd0 = "0- 1 día o menos";
-const valortd1 = "1- 3 días"; 
-const valortd2 = "2- 7 días"; 
-const valortd3 = "3- 15 días"; 
-const valortd4 = "4- 30 días"; 
-const valortd5 = "5- más de 30 días"; 
-
-const cantVisitas0 = "0- Nunca";
-const cantVisitas1 = "1- 1 vez"; 
-const cantVisitas2 = "2- 2 veces"; 
-const cantVisitas3 = "3- 3 veces"; 
-const cantVisitas4 = "4- 4 veces"; 
-const cantVisitas5 = "5- 5 veces o más"; 
-
-
-
 function formEncuesta() {
-   
     while (true) {
+        
         let pregunta1 = prompt("Pregunta 1.\n¿Cuál fue la modalidad del trámite que realizaste?\n" 
                                + modvirtual + "\n" + modvirtualPresencial + "\n" + modpresencial);
         
@@ -145,27 +118,27 @@ function formEncuesta() {
 
         while (true) {
         let pregunta9= prompt("Pregunta 9. \n" +"¿Cuántas veces tuviste que ir a la institución estatal para completar este trámite? \n" + cantVisitas0 + "\n" + cantVisitas1 + "\n" + cantVisitas2 + "\n" + cantVisitas3 + "\n" + cantVisitas4 + "\n" + cantVisitas5); 
-        visitasIE = parseInt(pregunta9);
+                
+        // Convertir la entrada a número
+        visitasIE = parseInt(pregunta9) * 2;
         console.log("Cantidad de visitas a la IE:", pregunta9);
+
         
         // Si la entrada es un número entre 0 y 5, salir del bucle
-        if (!isNaN(visitasIE) && visitasIE >= 0 && visitasIE <=5) {
+        if (!isNaN(visitasIE) && visitasIE >= 0 && visitasIE <= 5) {
             break;
-        } 
-        else {
+        } else {
             // Si la opción no es válida, mostrar un mensaje de error y repetir la pregunta
             alert("Por favor, ingresa el número de la opción elegida: 0, 1, 2, 3, 4 o 5.");
         }
-        
-    } 
-     
+    
     while (true) {
         let pregunta10 = prompt("Pregunta 10. \n" + "¿Cuánto dinero gastaste en transporte para ir a la IE a realizar este trámite? \n"  + "Digita el valor del boleto de ida, sin puntos ni comas." + "\n" + "Si no tuviste costo de transporte, digita 0 (cero).");
-        costoTrans = parseInt(pregunta10) * (visitasIE *2);
+        costoTrans = parseInt(pregunta10) * visitasIE;
         console.log("Costo de trasnsporte:", costoTrans);
 
-        // Si la entrada es un número mayor o igual a 0, salir del bucle
-        if (!isNaN(costoTrans) && costoTrans >= 0) {
+       // Si la entrada es un número mayor o igual a 0, salir del bucle
+        if (!isNaN(tiempoResol) && tiempoResol >= 0 && tiempoResol <= 5) {
             break;
         } else {
             // Si la opción no es válida, mostrar un mensaje de error y repetir la pregunta
@@ -177,22 +150,51 @@ function formEncuesta() {
     
     alert("El valor de la carga burocrática de tu trámite es: " + resultadoFinal);
     console.log("Carga burocrática total:", resultadoFinal);
-   
+// Almacenar respuestas
+respuestas.modtramite = modtramite;
+respuestas.tiempoLectura = tiempoLectura;
+respuestas.tiempoLlenado = tiempoLlenado;
+respuestas.tiempoTraslado = tiempoTraslado;
+respuestas.tiempoInicio = tiempoInicio;
+respuestas.tiempoResol = tiempoResol;
+respuestas.VST = VST;
+respuestas.tarifaTramite = tarifaTramite;
+respuestas.visitasIE = visitasIE;
+respuestas.costoTrans = costoTrans;
+respuestas.cargaBurocratica = resultadoFinal;
+
+respuestasEncuestas.push({ ...respuestas }); // Agregar objeto a array
+console.log("Objeto de respuestas:", respuestas);
+
+// Acumular en el array correspondiente según modalidad
+switch (modtramite) {
+    case 1: // Solo virtual
+        cargaBurocraticaSoloVirtual.push(resultadoFinal);
+        break;
+    case 2: // Virtual y presencial
+        cargaBurocraticaVirtualYPresencial.push(resultadoFinal);
+        break;
+    case 3: // Solo presencial
+        cargaBurocraticaSoloPresencial.push(resultadoFinal);
+        break;
+}
+        
 }
 
-formEncuesta();
-
-for (let i = 0; i <= 3; i++) {  // Bucle que se ejecuta 3 veces (de 0 a 2)
-    let encuestaExitosa = formEncuesta();  // Ejecuta la encuesta
-
-    if (!encuestaExitosa) {
-        alert("Cupo de encuestas completo");    
+function ejecutarEncuestas() {
+    while (contadorEncuestas < maxEncuestas) {
+        formEncuesta(); // Llama a la función de la encuesta
+        contadorEncuestas++; // Incrementa el contador
     }
-    
+    alert("Has completado todas las encuestas."); // Mensaje final
 }
 
 
+function calcularPromedio(array) {
+    if (array.length === 0) return 0; // Evitar división por cero
+    const suma = array.reduce((accum, curr) => accum + curr, 0);
+    return suma / array.length;
+}
 
-// tengo que construir un array con todas las respuestas después de ver si funciona el último for 
-// despues tengo que recorrer el array con filter para identificar las 3 momdalidades en la pregunta 1 para generar 3 arrays 
-// uno por modalidad
+}
+
